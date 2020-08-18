@@ -125,7 +125,7 @@ set fileformats=unix,dos,mac
 if exists('$SHELL')
     set shell=$SHELL
 else
-    set shell=/bin/sh
+    set shell=/bin/bash
 endif
 
 " session management
