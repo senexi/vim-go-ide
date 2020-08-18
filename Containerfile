@@ -1,6 +1,6 @@
 FROM golang:latest
 
-RUN apt-get update && apt-get -y install vim nodejs silversearcher-ag
+RUN apt-get update && apt-get -y install vim nodejs silversearcher-ag protobuf-compiler
 
 RUN curl --fail -L https://github.com/neovim/neovim/releases/download/v0.4.4/nvim-linux64.tar.gz|tar xzfv - && mv nvim-linux64/bin/nvim /usr/bin && mv nvim-linux64/share /
 
@@ -19,5 +19,17 @@ WORKDIR ${HOME}
 COPY init.vim ${HOME}/.config/nvim/
 RUN nvim --headless +PlugInstall  +qall && nvim --headless +"CocInstall coc-go coc-json" +qall
 COPY coc-settings.json ${HOME}/.config/nvim
+
+# install protobuf support 
+RUN go get -u -v github.com/golang/protobuf/protoc-gen-go && \
+    go get -u -v github.com/gogo/protobuf/protoc-gen-gofast && \
+    go get -u -v github.com/gogo/protobuf/proto && \
+    go get -u -v github.com/gogo/protobuf/protoc-gen-gogoslick && \
+    go get -u -v github.com/gogo/protobuf/gogoproto && \
+    go get -u -v github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc && \
+    go get -u -v github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && \
+    go get -u -v github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger && \
+    go get -u -v github.com/gogo/googleapis/...
+
 CMD "/bin/bash"
 
