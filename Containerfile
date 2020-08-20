@@ -31,5 +31,10 @@ RUN go get -u -v github.com/golang/protobuf/protoc-gen-go && \
     go get -u -v github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger && \
     go get -u -v github.com/gogo/googleapis/...
 
+#configure git to use ssh instead of https
+RUN git config --global user.email "dev@go.com" && \
+    git config --global user.name "dev" && \
+    git config --global url."git@github.com:".insteadOf "https://github.com/" 
+
 CMD "/bin/bash"
 
