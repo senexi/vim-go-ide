@@ -23,7 +23,7 @@ COPY coc-settings.json ${HOME}/.config/nvim
 # install protobuf support 
 RUN go get -u google.golang.org/protobuf/cmd/protoc-gen-go && \
     go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc && \
-    go get -u -v github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc && \
+    go get -u -v github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
 
 #configure git to use ssh instead of https
 RUN git config --global user.email "dev@go.com" && \
