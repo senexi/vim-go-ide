@@ -1,6 +1,6 @@
 FROM golang:latest
 
-RUN apt-get update && apt-get -y install vim nodejs silversearcher-ag protobuf-compiler
+RUN apt-get update && apt-get -y install vim nodejs silversearcher-ag protobuf-compiler postgresql-client
 
 RUN curl --fail -L https://github.com/neovim/neovim/releases/download/v0.4.4/nvim-linux64.tar.gz|tar xzfv - && mv nvim-linux64/bin/nvim /usr/bin && mv nvim-linux64/share /
 
