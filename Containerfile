@@ -14,14 +14,14 @@ RUN curl --fail -L https://github.com/neovim/neovim/releases/download/v0.4.4/nvi
 RUN adduser dev --disabled-password --gecos ""                          && \
     echo "ALL            ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers     && \
     chown -R dev:dev /home/dev /go && \
-    chsh -s /usr/bin/zsh dev
-
+    chgrp -R 0 /home/dev /go && \
+    chmod -R g+rwX /home/dev /go
+#    chsh -s /usr/bin/zsh dev \
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && apt-get update && \
 	apt-get install yarn
 
 USER dev
 ENV HOME /home/dev
-
 WORKDIR ${HOME} 
 
 COPY init.vim ${HOME}/.config/nvim/

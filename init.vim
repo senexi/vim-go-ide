@@ -74,7 +74,7 @@ Plug 'tomasr/molokai'
 " go
 "" Go Lang Bundle
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-
+Plug 'buoto/gotests-vim'
 
 "*****************************************************************************
 "*****************************************************************************
@@ -125,7 +125,7 @@ set fileformats=unix,dos,mac
 if exists('$SHELL')
     set shell=$SHELL
 else
-    set shell=/bin/bash
+    set shell=/usr/bin/zsh
 endif
 
 " session management
