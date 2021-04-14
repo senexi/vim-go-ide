@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM ubuntu:groovy
 
 RUN apt-get update -y && apt-get -y install vim \
 	nodejs \
@@ -6,9 +6,26 @@ RUN apt-get update -y && apt-get -y install vim \
 	protobuf-compiler \
 	postgresql-client \
 	less \
-	zsh
+    mpv \
+	zsh \
+    git \
+    gnupg \
+    make \
+    wget \
+    gcc \
+    exuberant-ctags \
+    curl \
+    neovim \
+    zip \
+    yarn
 
-RUN curl --fail -L https://github.com/neovim/neovim/releases/download/v0.4.4/nvim-linux64.tar.gz|tar xzfv - && mv nvim-linux64/bin/nvim /usr/bin && mv nvim-linux64/share /
+RUN wget -c https://dl.google.com/go/go1.16.3.linux-amd64.tar.gz -O - | tar -xz -C /usr/local && \
+    mkdir /go && \
+    printf 'export GOPATH=/go \n\
+export GOBIN=$GOPATH/bin \n\
+export PATH=$PATH:$GOPATH/bin \n\
+export GOROOT=/usr/local/go \n\
+export PATH=$PATH:$GOROOT/bin' >> /etc/profile
 
 # add dev user
 RUN adduser dev --disabled-password --gecos ""                          && \
@@ -17,11 +34,14 @@ RUN adduser dev --disabled-password --gecos ""                          && \
     chgrp -R 0 /home/dev /go && \
     chmod -R g+rwX /home/dev /go
 #    chsh -s /usr/bin/zsh dev \
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && apt-get update && \
-	apt-get install yarn
 
 USER dev
 ENV HOME /home/dev
+ENV GOROOT /usr/local/go
+ENV GOPATH /go
+ENV GOBIN /go/bin
+ENV PATH $GOBIN:$PATH
+ENV PATH $GOROOT/bin:$PATH
 WORKDIR ${HOME} 
 
 COPY init.vim ${HOME}/.config/nvim/
@@ -29,6 +49,7 @@ RUN nvim --headless +PlugInstall  +qall && nvim --headless +"CocInstall coc-go c
 COPY coc-settings.json ${HOME}/.config/nvim
 
 # install protobuf support 
+
 RUN go get -u google.golang.org/protobuf/cmd/protoc-gen-go && \
     go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc && \
     go get -u -v github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc && \
