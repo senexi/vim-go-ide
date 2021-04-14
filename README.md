@@ -6,8 +6,8 @@
 podman build --format docker -t senexi/go-vim:latest .
 
 #run with
-podman run -it -w /data -v $(pwd):/data --userns=keep-id --rm --net=host senexi/go-vim:latest /bin/bash
+podman run -it -w /data -v $(pwd):/data --userns=keep-id --rm --net=host senexi/go-vim:latest /bin/zsh
 
 #set alias
-alias vimgo='podman run -it -w /data -v $(pwd):/data --userns=keep-id --rm --net=host senexi/go-vim:latest /bin/bash'
+alias vimgo='podman run -it -w /data -v $(pwd):/data --userns=keep-id --rm --net=host senexi/go-vim:latest /bin/zsh'
 ```
