@@ -411,6 +411,9 @@ vnoremap K :m '<-2<CR>gv=gv
 "" Open current line on GitHub
 nnoremap <Leader>o :.Gbrowse<CR>
 
+"" Exit Terminal mode
+tnoremap kj <C-\><C-n>
+
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
