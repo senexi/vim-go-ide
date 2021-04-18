@@ -44,9 +44,9 @@ ENV PATH $GOBIN:$PATH
 ENV PATH $GOROOT/bin:$PATH
 WORKDIR ${HOME} 
 
-COPY init.vim ${HOME}/.config/nvim/
+COPY --chown=dev:0 init.vim ${HOME}/.config/nvim/
 RUN nvim --headless +PlugInstall  +qall && nvim --headless +"CocInstall coc-go coc-json" +qall
-COPY coc-settings.json ${HOME}/.config/nvim
+COPY --chown=dev:0 coc-settings.json ${HOME}/.config/nvim
 
 # install protobuf support 
 
@@ -62,8 +62,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
     git config --global user.name "dev" && \
     git config --global url."git@github.com:".insteadOf "https://github.com/"
 
-COPY .p10k.zsh ${HOME}/.p10k.zsh
-COPY .zshrc ${HOME}/.zshrc
-
+COPY --chown=dev:0 .p10k.zsh ${HOME}/.p10k.zsh
+COPY --chown=dev:0 .zshrc ${HOME}/.zshrc
 CMD "exec zsh"
 
